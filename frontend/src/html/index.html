@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,11 +8,13 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <title>CRUD Pokemon</title>
 </head>
+
 <body class="bg-black">
 
     <header class="mb-12 flex items-center justify-end font-medium">
         <div class="m-8">
-            <button id="button_adicionar" class="bg-white rounded-md px-3 py-2 shadow-custom text-2xl hover:bg-[#7B00FF] hover:text-white hover:shadow-customtwo transition-all">Adicionar</button>
+            <button id="button_adicionar"
+                class="bg-white rounded-md px-3 py-2 shadow-custom text-2xl hover:bg-[#7B00FF] hover:text-white hover:shadow-customtwo transition-all">Adicionar</button>
         </div>
     </header>
 
@@ -20,35 +23,45 @@
         <!-- Form adicionar -->
         <div id="modal_form" class="bg-transparent fixed inset-0 flex items-center justify-center hidden">
             <div class="bg-black p-24 rounded-xl border-2 border-white">
-                <div class="flex justify-end mb-12">
-                    <i class="ph ph-x-circle" style="color: white; cursor: pointer; font-size: 24px;" id="button_exit_modal"></i>
+                <div class="flex justify-between items-center mb-12">
+                    <div>
+                        <h2 class="text-white font-medium text-3xl underline">Insira as informações do Pokemon</h2>
+                    </div>
+                    
+                    <i class="ph ph-x-circle" style="color: white; cursor: pointer; font-size: 24px;"
+                        id="button_exit_modal"></i>
                 </div>
                 <form action="" class="flex flex-col gap-6 min-w-[800px]" id="form_add">
                     <input type="text" name="nome" id="nome_poke" placeholder="Nome do Pokemon" class="p-4 rounded-lg">
                     <input type="text" name="tipo" id="tipo_poke" placeholder="Tipo do Pokeon" class="p-4 rounded-lg">
-                    <input type="text" name="url_img" id="url_img" placeholder="URL da imagem do Pokemon" class="p-4 rounded-lg">
+                    <input type="text" name="url_img" id="url_img" placeholder="URL da imagem do Pokemon"
+                        class="p-4 rounded-lg">
                     <button id="button_submit"
                         class="bg-white rounded-md px-3 py-2 shadow-custom text-2xl hover:bg-[#7B00FF] hover:text-white hover:shadow-customtwo transition-all max-w-48">Adicionar</button>
                 </form>
             </div>
         </div>
         <!-- container - cards -->
-        <section class="bg-[#303030] font-medium text-white p-16 rounded-xl border-2 border-white shadow-2xl shadow-white flex flex-col items-center gap-8">
+        <section
+            class="bg-[#303030] font-medium text-white p-16 rounded-xl border-2 border-white shadow-2xl shadow-white flex flex-col items-center gap-8" id="container_poke">
 
             <!-- Card - Poke -->
             <div class="flex gap-2 bg-black p-5 rounded-xl border-2 border-white min-w-[500px]">
                 <div class="bg-gradient-to-r from-white to-[#7B00FF] p-1 rounded-xl">
                     <div class="bg-white rounded-xl">
-                        <img class="w-[400px] h-[400px] rounded-xl" src="https://i.pinimg.com/736x/e1/9b/f0/e19bf09954ad5231ad9a89cb8db03ec4.jpg" alt="">
+                        <img class="w-[400px] h-[400px] rounded-xl"
+                            src="https://i.pinimg.com/736x/e1/9b/f0/e19bf09954ad5231ad9a89cb8db03ec4.jpg" alt="">
                     </div>
-                    
+
                 </div>
-                
+
                 <div class="flex flex-col min-w-96 text-center justify-center items-center gap-4">
                     <h1 class="text-6xl">Pikachu</h1>
                     <p class="text-xl">Tipo: Eletrico</p>
-                    <button id="button_delete" class="text-black bg-white rounded-md px-3 py-2 shadow-custom text-2xl hover:bg-[#7B00FF] hover:text-white hover:shadow-customtwo transition-all min-w-48">Deletar</button>
-                    <button id="button_atualizar" class="text-black bg-white rounded-md px-3 py-2 shadow-custom text-2xl hover:bg-[#7B00FF] hover:text-white hover:shadow-customtwo transition-all min-w-48">Atualizar</button>
+                    <button id="button_delete"
+                        class="text-black bg-white rounded-md px-3 py-2 shadow-custom text-2xl hover:bg-[#7B00FF] hover:text-white hover:shadow-customtwo transition-all min-w-48">Deletar</button>
+                    <button id="button_atualizar"
+                        class="text-black bg-white rounded-md px-3 py-2 shadow-custom text-2xl hover:bg-[#7B00FF] hover:text-white hover:shadow-customtwo transition-all min-w-48">Atualizar</button>
                 </div>
             </div>
 
@@ -56,4 +69,5 @@
     </main>
     <script src="../js/script.js"></script>
 </body>
+
 </html>
