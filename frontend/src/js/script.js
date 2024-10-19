@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
 
         item.forEach((poke)=> {
             const cardPoke = document.createElement('div');
-            const classesToAdd = `flex gap-2 bg-black p-5 rounded-xl border-2 border-white min-w-[500px]`;
+            const classesToAdd = `flex flex-wrap justify-center gap-2 bg-black p-5 rounded-xl border-2 border-white min-w-[500px]`;
             cardPoke.classList.add(...classesToAdd.split(" "));
 
 
@@ -34,13 +34,37 @@ document.addEventListener('DOMContentLoaded', ()=> {
                 <div class="flex flex-col min-w-96 text-center justify-center items-center gap-4">
                     <h1 class="text-6xl">${poke.name}</h1>
                     <p class="text-xl">Tipo: ${poke.tipo}</p>
-                    <button id="button_delete"
+                    <button id="button_delete" data_id="${poke.id}"
                         class="text-black bg-white rounded-md px-3 py-2 shadow-custom text-2xl hover:bg-[#7B00FF] hover:text-white hover:shadow-customtwo transition-all min-w-48">Deletar</button>
                     <button id="button_atualizar"
                         class="text-black bg-white rounded-md px-3 py-2 shadow-custom text-2xl hover:bg-[#7B00FF] hover:text-white hover:shadow-customtwo transition-all min-w-48">Atualizar</button>
                 </div>
             `;
             container_poke.appendChild(cardPoke);
+
+            const button_delete = cardPoke.querySelector("#button_delete");
+            button_delete.addEventListener('click', ()=> {
+                const idpoke = button_delete.getAttribute('data_id');
+                fetch("http://localhost:5000/delete/pokemon", {
+                    method: 'DELETE',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        id: idpoke,
+                    }),
+                })
+                .then((response)=> {
+                    if(response.ok) {
+                        alert('Pokemon deletado com sucesso!')
+                        location.reload();
+                    } else {
+                        alert('Falha ao deletar o Pokémon!')
+                    }
+                }).catch((error)=> {
+                    console.error('Erro na requisição DELETE: ',error);
+                });
+            });
         })
     })
 
@@ -80,9 +104,6 @@ document.addEventListener('DOMContentLoaded', ()=> {
                     }
                 });
             }
-
-
-            
         });
-    })
+    });
 });
