@@ -17,8 +17,7 @@ function incrypt(text) {
 }
 
 function decrypt(text) {
-    console.log("Texto a ser descriptografado:", text); // Adicione este log
-
+    
     if (!text || typeof text !== "string" || !text.includes(":")) {
         throw new Error("Texto para descriptografar é inválido");
     }

@@ -11,7 +11,14 @@ const prisma = new PrismaClient();
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // permite o express entenda dados de formulario html
-app.use(cors());
+
+app.use(
+    cors({
+        origin: "http://127.0.0.1:5500",
+        methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"], // Métodos permitidos
+        allowedHeaders: ["Content-Type"], // Cabeçalhos permitidos
+    })
+);
 
 app.use(express.static(path.join(__dirname, "..", "frontend")));
 
@@ -68,7 +75,6 @@ app.delete('/delete/pokemon', async (req, res)=> {
 
         // Descriptografa o id
         const idDescriptado = decrypt(id);
-        console.log('Id descryptografado: ',idDescriptado);
 
         const pokemon = await prisma.pokemon.delete({
             where: {
@@ -84,8 +90,44 @@ app.delete('/delete/pokemon', async (req, res)=> {
     } catch (error) {
         console.error('Erro ( delete/pokemon ): ', error)
     }
-
 })
+
+app.patch("/atualizar", async (req, res) => {
+    try {
+        const { id, nome, tipo, url_imgPoke } = req.body;
+
+        // um objeto para a guardar o que sera atualizado caso o usuario não tenha passado tudo.
+        const objData = {};
+
+        // verifica quais dados foram passados e guardam no obj
+        if (nome) {
+            objData.name = nome;
+        } else if (tipo) {
+            objData.tipo = tipo;
+        } else if (url_imgPoke) {
+            objData.url_image = url_imgPoke;
+        }
+
+        const idDecriptado = decrypt(id);
+
+        const pokemon = await prisma.pokemon.update({
+            where: {
+                id: parseInt(idDecriptado),
+            },
+            // usa os dados ( que são somente os dados passados ) que serão atualizado.
+            data: objData,
+        });
+
+        if (!pokemon) {
+            res.status(404).json({ msg: "Pokemon Não encontrado" });
+        } 
+        
+        res.status(201).json({ msg: "Pokemon atualizado com sucesso!" });
+    } catch (error) {
+        console.error("Error: ", error);
+        res.status(500).json({ msg: "Erro ao atualizar Pokémon." });
+    }
+});
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, ()=> {

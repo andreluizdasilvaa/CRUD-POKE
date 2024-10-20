@@ -43,8 +43,10 @@ document.addEventListener('DOMContentLoaded', ()=> {
             container_poke.appendChild(cardPoke);
 
             const button_delete = cardPoke.querySelector("#button_delete");
+            const idpoke = button_delete.getAttribute('data_id');
+
             button_delete.addEventListener('click', ()=> {
-                const idpoke = button_delete.getAttribute('data_id');
+
                 fetch("http://localhost:5000/delete/pokemon", {
                     method: 'DELETE',
                     headers: {
@@ -65,6 +67,41 @@ document.addEventListener('DOMContentLoaded', ()=> {
                     console.error('Erro na requisição DELETE: ',error);
                 });
             });
+
+            const button_atualizar = cardPoke.querySelector("#button_atualizar");
+            button_atualizar.addEventListener('click', ()=> {
+
+                modal_form.style.display = 'block';
+                const button_submit = document.getElementById("button_submit");
+
+                button_submit.addEventListener('click', ()=> {
+
+                    const nome_poke = document.getElementById("nome_poke").value;
+                    const tipo_poke = document.getElementById("tipo_poke").value;
+                    const url_img = document.getElementById("url_img").value;
+
+                    fetch("http://localhost:5000/atualizar", {
+                        method: "PATCH",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            id: idpoke,
+                            nome: nome_poke,
+                            tipo: tipo_poke,
+                            url_imgPoke: url_img,
+                        }),
+                    }).then((response) => {
+                        if (response.ok) {
+                            alert("Pokemon atualizado!");
+                            location.reload();
+                        } else {
+                            alert("Falha ao atualizar pokemon");
+                        }
+                    });
+                })
+                
+            })
         })
     })
 
